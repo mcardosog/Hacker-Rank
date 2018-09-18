@@ -1,0 +1,25 @@
+n = int(input())
+iA=0
+iB=0
+
+while n>0:        
+    sA= str(input())+'a'    
+    sB= str(input())+'a'    
+    iA=0
+    iB=0
+    while iA+iB<len(sA)+len(sB)-2:            
+        if (iA<len(sA) and iB<len(sB)):            
+            if sA[iA:]<=sB[iB:] and sA[iA]!='a':
+                print(sA[iA],end='')
+                iA+=1
+            elif  sB[iB]!='a':                
+                print(sB[iB],end='')
+                iB+=1
+        else:
+            if iA<len(sA):
+                print(sA[iA:len(sA)-1])                
+            else:
+                print(sB[iB:len(sB)-1])
+            break
+    n-=1
+    print('')
