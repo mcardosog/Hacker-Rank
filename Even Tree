@@ -1,0 +1,78 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+class Solution {
+    static int count;
+        static void Main(string[] args)
+        {
+            count = 0;
+            string read = Console.ReadLine();
+            Tree[] nodes = new Tree[int.Parse(read.Split()[0])];
+            int c = int.Parse(read.Split()[1]);
+
+            for (int i = 0; i < nodes.Length; i++)
+                nodes[i] = new Tree(i+1);
+
+            for (int i = 0; i < c; i++)
+            {
+                string [] temp = Console.ReadLine().Split();
+                int iA = int.Parse(temp[0])-1;
+                int iB = int.Parse(temp[1])-1;
+                Tree a = nodes[iA];
+                Tree b = nodes[iB];
+                b.AddChildren(a);
+                a.UpdateVertex();
+            }
+
+            EvenTree(nodes[0]);
+            Console.WriteLine(count);
+
+        }
+
+        public static bool EvenTree(Tree node)
+        {
+            if (node.Children.Count == 0)
+                return false;
+            foreach (Tree item in node.Children)
+            {
+                if (EvenTree(item))
+                    node.VertexQ -= item.VertexQ+1;                
+            }
+
+            if (node.VertexQ % 2 != 0 && node.Parent!=null)
+            {
+                count++;
+                return true;
+            }
+            return false;
+        }
+}
+    class Tree
+    {
+        public int VertexQ { get; set; }
+        public List<Tree> Children { get; set; }
+        public Tree Parent { get; set; }
+        public int Value;
+
+        public Tree(int Value)
+        {
+            this.Value = Value;
+            VertexQ = 0;
+            Children = new List<Tree>();
+        }
+
+        public void AddChildren(Tree child)
+        {
+            Children.Add(child);
+            child.Parent = this;
+        }
+
+        public void UpdateVertex()
+        {
+            if (Parent != null)
+            {
+                Parent.VertexQ++;
+                Parent.UpdateVertex();
+            }
+        }
+    }
