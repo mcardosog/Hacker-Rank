@@ -1,0 +1,14 @@
+arr= input()
+arr=arr.split(' ')
+fN=int(arr[0])
+sN=int(arr[1])
+times=int(arr[2])-2
+current =0
+
+while times>0:
+    current = sN*sN+fN
+    fN=sN
+    sN=current    
+    times-=1
+
+print (current)
