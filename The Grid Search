@@ -1,0 +1,63 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApplication1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {            
+            int n = int.Parse(Console.ReadLine());
+            while (n>0)
+            {
+                bool simil = false;
+                string[] arr = new string[int.Parse(Console.ReadLine().Split()[0])];
+                for (int i = 0; i < arr.Length; i++)
+                    arr[i] = Console.ReadLine();
+
+                string[] pat = new string[int.Parse(Console.ReadLine().Split()[0])];
+                for (int i = 0; i < pat.Length; i++)
+                    pat[i] = Console.ReadLine();
+
+                if (arr[0].Length < pat[0].Length || arr.Length < pat.Length)
+                    Console.WriteLine("NO");
+
+                else
+                {
+                    for (int i = 0; i <= arr.Length - pat.Length; i++)
+                    {
+                        for (int j = 0; j <= arr[0].Length - pat[0].Length; j++)
+                        {
+                            if(Similar(arr,pat,i,j))
+                            {
+                                simil = true;
+                                Console.WriteLine("YES");
+                            }                                
+                        }
+                    }
+                }
+                if (!simil) Console.WriteLine("NO");
+                n--;
+            }
+        }
+
+        public static bool Similar(string[] arr, string[] pat, int i, int j)
+        {
+
+            for (int _i=0, iI=i;  _i< pat.Length; _i++, iI++)
+            {
+                for (int _j=0, jJ=j; _j < pat[0].Length; _j++, jJ++)
+                {
+                    if (pat[_i][_j] != arr[iI][jJ])
+                        return false;
+                }
+            }
+            return true;
+        }
+
+    }
+}
+
