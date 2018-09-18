@@ -1,0 +1,52 @@
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+# Complete the minimumLoss function below.
+class Tree:
+    def __init__(self,value):
+        self.leftChild = None
+        self.rightChild = None
+        self.value = value
+
+    def AddValue(self, value, minMaximum):
+        if value<self.value:
+            if self.leftChild==None:
+                self.leftChild = Tree(value)
+            else:
+                self.leftChild.AddValue(value, minMaximum)
+        else:
+            if value> self.value:
+                tempMinMaximum = value-self.value
+                if minMaximum[0] > tempMinMaximum:
+                    minMaximum[0] = tempMinMaximum
+            if self.rightChild == None:
+                self.rightChild = Tree(value)
+            else:
+                self.rightChild.AddValue(value, minMaximum)
+
+def minimumLoss(price):
+    mainTree = Tree( price[len(price)-1])
+    minMaximum = [max(price)]
+
+    for i in range(len(price)-2,-1,-1):
+        mainTree.AddValue(price[i],minMaximum)
+    return minMaximum[0]
+
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    n = int(input())
+
+    price = list(map(int, input().rstrip().split()))
+
+    result = minimumLoss(price)
+
+    fptr.write(str(result) + '\n')
+
+    fptr.close()
+
