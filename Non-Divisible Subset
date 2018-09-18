@@ -1,0 +1,45 @@
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+# Complete the nonDivisibleSubset function below.
+
+
+def nonDivisibleSubset(k, S):
+    countList = [0]*k
+    finalCount = 0
+    for x in range(0, len(S)):
+        S[x] = S[x] % k
+        countList[S[x]]+=1
+
+    mid = int(k/2)
+    for x in range(0, mid+1):
+        if (x==0 or (k%2==0 and x==mid)):
+            if countList[x]: finalCount+=1
+        else: finalCount+= max(countList[x],countList[k-x])
+
+    return finalCount
+
+
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    nk = input().split()
+
+    n = int(nk[0])
+
+    k = int(nk[1])
+
+    S = list(map(int, input().rstrip().split()))
+
+    result = nonDivisibleSubset(k, S)
+
+    fptr.write(str(result) + '\n')
+
+    fptr.close()
+
+
